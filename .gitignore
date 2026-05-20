@@ -1,0 +1,15 @@
+# Node modules (if any)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.suo
+*.user
+
+# Environment files
+.env
+.env.local

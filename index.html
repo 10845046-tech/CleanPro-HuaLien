@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CleanPro Hualien — Professional Hotel & Home Cleaning Services</title>
+  <meta name="description" content="CleanPro Hualien provides professional hotel, motel, guesthouse and home cleaning services in Hualien, Taiwan. Book online, fast and reliable." />
+  <meta name="keywords" content="hotel cleaning, Hualien, 花蓮, motel cleaning, home cleaning, 清潔服務, 飯店清潔" />
+  <meta property="og:title" content="CleanPro Hualien — Hotel & Home Cleaning" />
+  <meta property="og:description" content="Professional cleaning services for hotels, motels and homes in Hualien, Taiwan." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧹</text></svg>" />
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <div class="nav-logo-icon">🧹</div>
+        <span data-en="CleanPro" data-zh="潔淨專家">CleanPro</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services" data-en="Services" data-zh="服務項目">Services</a></li>
+        <li><a href="#pricing" data-en="Pricing" data-zh="收費標準">Pricing</a></li>
+        <li><a href="#gallery" data-en="Gallery" data-zh="作品展示">Gallery</a></li>
+        <li><a href="#booking" data-en="Book Now" data-zh="立即預約">Book Now</a></li>
+        <li><a href="#contact" data-en="Contact" data-zh="聯絡我們">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Language Toggle -->
+        <div class="lang-toggle" id="langToggle">
+          <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="btnZH" onclick="setLang('zh')">中文</button>
+        </div>
+
+        <!-- Auth buttons (shown when logged out) -->
+        <div id="authButtons">
+          <button class="btn btn-outline btn-sm" id="btnLogin" onclick="openModal('loginModal')" data-en="Login" data-zh="登入">Login</button>
+          <button class="btn btn-primary btn-sm" id="btnRegister" onclick="openModal('registerModal')" data-en="Register" data-zh="註冊">Register</button>
+        </div>
+
+        <!-- User menu (shown when logged in) -->
+        <div class="user-menu" id="userMenu" style="display:none;">
+          <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()">A</div>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-name" id="dropdownName">User</div>
+              <div class="user-dropdown-email" id="dropdownEmail">user@email.com</div>
+            </div>
+            <div class="user-dropdown-item" onclick="openModal('bookingModal')">
+              📅 <span data-en="Book a Service" data-zh="預約清潔">Book a Service</span>
+            </div>
+            <div class="user-dropdown-item danger" onclick="logout()">
+              🚪 <span data-en="Logout" data-zh="登出">Logout</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="images/hero.png" alt="Luxury Hotel Room in Hualien" />
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="hero-content">
+      <div class="hero-badge">
+        ✨ <span data-en="Hualien's #1 Cleaning Service" data-zh="花蓮首選清潔服務">Hualien's #1 Cleaning Service</span>
+      </div>
+      <h1 class="hero-title">
+        <span data-en="Spotless Rooms." data-zh="潔淨如新，">Spotless Rooms.</span>
+        <span data-en="Happy Guests." data-zh="賓客滿意。">Happy Guests.</span>
+      </h1>
+      <p class="hero-desc" data-en="Professional hotel, motel, guesthouse and home cleaning services in Hualien, Taiwan. Fast, reliable, and affordable — tailored for hospitality businesses." data-zh="專業飯店、汽車旅館、民宿及住宅清潔服務，服務範圍涵蓋整個花蓮地區。快速、可靠、價格合理，專為住宿業量身打造。">
+        Professional hotel, motel, guesthouse and home cleaning services in Hualien, Taiwan. Fast, reliable, and affordable — tailored for hospitality businesses.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-accent btn-lg" onclick="scrollToSection('booking')" data-en="📅 Book Now" data-zh="📅 立即預約">📅 Book Now</button>
+        <button class="btn btn-white btn-lg" onclick="scrollToSection('services')" data-en="View Services" data-zh="查看服務">View Services</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">500+</div>
+          <div class="hero-stat-label" data-en="Rooms Cleaned" data-zh="清潔房間">Rooms Cleaned</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">98%</div>
+          <div class="hero-stat-label" data-en="Satisfaction Rate" data-zh="滿意度">Satisfaction Rate</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">50+</div>
+          <div class="hero-stat-label" data-en="Partner Hotels" data-zh="合作飯店">Partner Hotels</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SERVICES ==================== -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <div class="section-tag">🏨 <span data-en="Our Services" data-zh="服務項目">Our Services</span></div>
+      <h2 class="section-title" data-en="Cleaning Solutions for Every Need" data-zh="全方位清潔解決方案">Cleaning Solutions for Every Need</h2>
+      <p class="section-subtitle" data-en="From hotel rooms to private residences, we deliver spotless results every time with trained professionals." data-zh="從飯店客房到私人住宅，我們的專業團隊每次都能提供完美的清潔成果。">
+        From hotel rooms to private residences, we deliver spotless results every time with trained professionals.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Hotel Room Cleaning -->
+      <div class="service-card animate-on-scroll">
+        <div class="service-card-img">
+          <img src="images/cleaning-hotel.png" alt="Hotel Room Cleaning" />
+          <span class="service-card-badge" data-en="Most Popular" data-zh="最受歡迎">Most Popular</span>
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">🛏️</div>
+          <div class="service-card-title" data-en="Hotel Room Cleaning" data-zh="飯店客房清潔">Hotel Room Cleaning</div>
+          <p class="service-card-desc" data-en="Professional on-demand room cleaning for hotels, motels, and guesthouses. Bed making, bathroom sanitization, linen change, and full room turnover." data-zh="為飯店、汽車旅館及民宿提供專業即時客房清潔服務，包含鋪床、衛浴消毒、床單更換及整體房間翻新。">
+            Professional on-demand room cleaning for hotels, motels, and guesthouses. Bed making, bathroom sanitization, linen change, and full room turnover.
+          </p>
+          <div class="service-price">
+            <span class="price-from" data-en="From" data-zh="起價">From</span>
+            <span class="price-amount">250</span>
+            <span class="price-unit" data-en="TWD / room" data-zh="台幣 / 間">TWD / room</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Cleaning -->
+      <div class="service-card animate-on-scroll" style="transition-delay:0.1s">
+        <div class="service-card-img">
+          <img src="images/home-cleaning.png" alt="Home Cleaning Service" />
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">🏠</div>
+          <div class="service-card-title" data-en="Home Cleaning" data-zh="住宅清潔">Home Cleaning</div>
+          <p class="service-card-desc" data-en="Complete residential cleaning service including living areas, bedrooms, kitchen, and bathrooms. Flexible scheduling and customizable packages." data-zh="完整的住宅清潔服務，包括客廳、臥室、廚房及衛浴。靈活排程，可依需求客製化方案。">
+            Complete residential cleaning service including living areas, bedrooms, kitchen, and bathrooms. Flexible scheduling and customizable packages.
+          </p>
+          <div class="service-price">
+            <span class="price-from" data-en="From" data-zh="起價">From</span>
+            <span class="price-amount">2,000</span>
+            <span class="price-unit" data-en="TWD / visit" data-zh="台幣 / 次">TWD / visit</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deep Cleaning -->
+      <div class="service-card animate-on-scroll" style="transition-delay:0.2s">
+        <div class="service-card-img">
+          <img src="images/motel.png" alt="Deep Cleaning Service" />
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">✨</div>
+          <div class="service-card-title" data-en="Deep Cleaning" data-zh="深層清潔">Deep Cleaning</div>
+          <p class="service-card-desc" data-en="Thorough deep cleaning for move-in/move-out, post-renovation, or seasonal cleaning. Includes grout cleaning, appliance interior cleaning, and disinfection." data-zh="入住/搬遷、裝修後或季節性深層清潔，包含縫隙清潔、家電內部清洗及全面消毒殺菌。">
+            Thorough deep cleaning for move-in/move-out, post-renovation, or seasonal cleaning.
+          </p>
+          <div class="service-price">
+            <span class="price-from" data-en="From" data-zh="起價">From</span>
+            <span class="price-amount">3,500</span>
+            <span class="price-unit" data-en="TWD / visit" data-zh="台幣 / 次">TWD / visit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING ==================== -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <div class="section-tag">💰 <span data-en="Pricing" data-zh="收費標準">Pricing</span></div>
+      <h2 class="section-title" data-en="Transparent & Affordable Rates" data-zh="透明公開、合理收費">Transparent & Affordable Rates</h2>
+      <p class="section-subtitle" data-en="No hidden fees. All prices are quoted in New Taiwan Dollar (TWD). Final price may vary based on room size and condition." data-zh="無隱藏費用。所有價格以新台幣（TWD）計算，最終報價視房間大小及狀況而定。">
+        No hidden fees. All prices are quoted in New Taiwan Dollar (TWD).
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Hotel / Motel Cleaning -->
+      <div class="pricing-group animate-on-scroll">
+        <div class="pricing-group-title">
+          <div class="pricing-group-icon">🏨</div>
+          <span data-en="Hotel & Motel Cleaning" data-zh="飯店・汽車旅館清潔">Hotel & Motel Cleaning</span>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Twin / Double Room (2 persons)" data-zh="雙人房（2人床型）">Twin / Double Room (2 persons)</span>
+            <small data-en="Standard turnover service" data-zh="標準翻房服務">Standard turnover service</small>
+          </div>
+          <div class="pricing-item-price">250 <span>TWD</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Business Room" data-zh="商務客房">Business Room</span>
+            <small data-en="With desk & workspace cleaning" data-zh="含辦公桌及工作區清潔">With desk & workspace cleaning</small>
+          </div>
+          <div class="pricing-item-price">300 <span>TWD</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Quad Room (4 persons)" data-zh="四人房">Quad Room (4 persons)</span>
+            <small data-en="Includes 4 beds & bathroom" data-zh="含4張床及衛浴">Includes 4 beds & bathroom</small>
+          </div>
+          <div class="pricing-item-price">350 <span>TWD</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Suite / Deluxe Room" data-zh="套房 / 豪華客房">Suite / Deluxe Room</span>
+            <small data-en="Large area, full service" data-zh="大坪數，全套服務">Large area, full service</small>
+          </div>
+          <div class="pricing-item-price">450 <span>TWD</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Lobby & Common Areas" data-zh="大廳及公共區域">Lobby & Common Areas</span>
+            <small data-en="Quoted separately based on area" data-zh="依坪數另行報價">Quoted separately based on area</small>
+          </div>
+          <div class="pricing-item-price" data-en="Quote" data-zh="詢價">Quote</div>
+        </div>
+        <div class="pricing-note">
+          💡 <span data-en="Volume discounts available for 10+ rooms/day. Monthly contracts get 15% off." data-zh="每日10間以上享量折優惠，月約客戶享85折優惠。">Volume discounts available for 10+ rooms/day. Monthly contracts get 15% off.</span>
+        </div>
+      </div>
+
+      <!-- Home Cleaning -->
+      <div class="pricing-group animate-on-scroll" style="transition-delay:0.15s">
+        <div class="pricing-group-title">
+          <div class="pricing-group-icon">🏠</div>
+          <span data-en="Home & Residential Cleaning" data-zh="住宅清潔">Home & Residential Cleaning</span>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Standard Home Cleaning" data-zh="基本住宅清潔">Standard Home Cleaning</span>
+            <small data-en="Up to 2 bedrooms + living area" data-zh="2房以下 + 客廳">Up to 2 bedrooms + living area</small>
+          </div>
+          <div class="pricing-item-price">2,000 <span>TWD+</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Medium Apartment (3–4 rooms)" data-zh="中型公寓（3-4房）">Medium Apartment (3–4 rooms)</span>
+            <small data-en="Full apartment cleaning" data-zh="全公寓清潔">Full apartment cleaning</small>
+          </div>
+          <div class="pricing-item-price">2,800 <span>TWD+</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Deep Cleaning" data-zh="深層清潔">Deep Cleaning</span>
+            <small data-en="Comprehensive top-to-bottom" data-zh="全面徹底清潔">Comprehensive top-to-bottom</small>
+          </div>
+          <div class="pricing-item-price">3,500 <span>TWD+</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Move-in / Move-out Cleaning" data-zh="搬入 / 搬遷清潔">Move-in / Move-out Cleaning</span>
+            <small data-en="Full sanitization & restoration" data-zh="全面消毒及還原">Full sanitization & restoration</small>
+          </div>
+          <div class="pricing-item-price">4,500 <span>TWD+</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-item-name">
+            <span data-en="Monthly Regular Plan" data-zh="定期月方案">Monthly Regular Plan</span>
+            <small data-en="4 visits/month, priority scheduling" data-zh="每月4次，優先排程">4 visits/month, priority scheduling</small>
+          </div>
+          <div class="pricing-item-price">5,500 <span>TWD/月</span></div>
+        </div>
+        <div class="pricing-note">
+          💡 <span data-en="Prices may vary based on actual room size and condition. Free on-site quote available." data-zh="實際費用依坪數及環境狀況調整，可預約免費到府估價。">Prices may vary based on actual room size and condition. Free on-site quote available.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section class="section how-it-works" id="how">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <div class="section-tag">⚡ <span data-en="How It Works" data-zh="服務流程">How It Works</span></div>
+      <h2 class="section-title" data-en="Clean in 4 Simple Steps" data-zh="4個簡單步驟，完成清潔">Clean in 4 Simple Steps</h2>
+      <p class="section-subtitle" data-en="Our streamlined process makes booking effortless so you can focus on your guests." data-zh="我們的流程簡單便捷，讓您專注於接待賓客。">
+        Our streamlined process makes booking effortless so you can focus on your guests.
+      </p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card animate-on-scroll">
+        <div class="step-num">1</div>
+        <div class="step-title" data-en="Register" data-zh="註冊帳號">Register</div>
+        <p class="step-desc" data-en="Create a free member account in under 2 minutes." data-zh="2分鐘內建立免費會員帳號。">Create a free member account in under 2 minutes.</p>
+      </div>
+      <div class="step-card animate-on-scroll" style="transition-delay:0.1s">
+        <div class="step-num">2</div>
+        <div class="step-title" data-en="Book Online" data-zh="線上預約">Book Online</div>
+        <p class="step-desc" data-en="Select your service, date, time and provide your address." data-zh="選擇服務項目、日期、時間並提供地址。">Select your service, date, time and provide your address.</p>
+      </div>
+      <div class="step-card animate-on-scroll" style="transition-delay:0.2s">
+        <div class="step-num">3</div>
+        <div class="step-title" data-en="We Show Up" data-zh="我們上門">We Show Up</div>
+        <p class="step-desc" data-en="Our trained team arrives on time with all equipment." data-zh="訓練有素的團隊準時攜帶設備到場。">Our trained team arrives on time with all equipment.</p>
+      </div>
+      <div class="step-card animate-on-scroll" style="transition-delay:0.3s">
+        <div class="step-num">4</div>
+        <div class="step-title" data-en="Enjoy & Pay" data-zh="享受清潔・付款">Enjoy & Pay</div>
+        <p class="step-desc" data-en="Inspect the results and pay via your preferred method." data-zh="驗收成果並以您偏好的方式付款。">Inspect the results and pay via your preferred method.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GALLERY ==================== -->
+<section class="section gallery" id="gallery">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <div class="section-tag">🖼️ <span data-en="Gallery" data-zh="作品展示">Gallery</span></div>
+      <h2 class="section-title" data-en="Beautiful Properties We Serve" data-zh="我們服務的美麗場所">Beautiful Properties We Serve</h2>
+      <p class="section-subtitle" data-en="Serving top-rated hotels, motels, and guesthouses across Hualien City." data-zh="服務花蓮市各大優質飯店、汽車旅館及民宿。">
+        Serving top-rated hotels, motels, and guesthouses across Hualien City.
+      </p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item animate-on-scroll">
+        <img src="images/hotel-exterior.png" alt="Hualien Hotel Exterior" />
+        <div class="gallery-overlay">
+          <span class="gallery-label" data-en="Hualien Boutique Hotel" data-zh="花蓮精品飯店">Hualien Boutique Hotel</span>
+        </div>
+      </div>
+      <div class="gallery-item animate-on-scroll" style="transition-delay:0.1s">
+        <img src="images/hero.png" alt="Luxury Hotel Room" />
+        <div class="gallery-overlay">
+          <span class="gallery-label" data-en="Luxury Suite Room" data-zh="豪華套房">Luxury Suite Room</span>
+        </div>
+      </div>
+      <div class="gallery-item animate-on-scroll" style="transition-delay:0.15s">
+        <img src="images/cleaning-hotel.png" alt="Professional Cleaning" />
+        <div class="gallery-overlay">
+          <span class="gallery-label" data-en="Professional Turnover" data-zh="專業翻房服務">Professional Turnover</span>
+        </div>
+      </div>
+      <div class="gallery-item animate-on-scroll" style="transition-delay:0.2s">
+        <img src="images/hualien-room.png" alt="Guesthouse Room" />
+        <div class="gallery-overlay">
+          <span class="gallery-label" data-en="Hualien Guesthouse" data-zh="花蓮民宿">Hualien Guesthouse</span>
+        </div>
+      </div>
+      <div class="gallery-item animate-on-scroll" style="transition-delay:0.25s">
+        <img src="images/motel.png" alt="Motel Corridor" />
+        <div class="gallery-overlay">
+          <span class="gallery-label" data-en="Motel Corridor" data-zh="汽車旅館走廊">Motel Corridor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BOOKING ==================== -->
+<section class="section booking" id="booking">
+  <div class="container">
+    <div class="booking-wrapper">
+      <div class="booking-info animate-on-scroll">
+        <div class="section-tag">📅 <span data-en="Book a Service" data-zh="預約服務">Book a Service</span></div>
+        <h2 data-en="Ready for a Spotless Space?" data-zh="準備好讓空間煥然一新了嗎？">Ready for a Spotless Space?</h2>
+        <p data-en="Members can book any of our cleaning services online. Create a free account to get started and manage all your bookings in one place." data-zh="會員可在線上預約我們的所有清潔服務。立即建立免費帳號，在一個平台管理所有預約。">
+          Members can book any of our cleaning services online. Create a free account to get started.
+        </p>
+        <div class="booking-features">
+          <div class="booking-feature">
+            <div class="booking-feature-icon">⚡</div>
+            <span data-en="Instant booking confirmation" data-zh="即時預約確認">Instant booking confirmation</span>
+          </div>
+          <div class="booking-feature">
+            <div class="booking-feature-icon">💳</div>
+            <span data-en="Multiple payment methods accepted" data-zh="支援多種付款方式">Multiple payment methods accepted</span>
+          </div>
+          <div class="booking-feature">
+            <div class="booking-feature-icon">📱</div>
+            <span data-en="WhatsApp & Line contact available" data-zh="可透過WhatsApp及Line聯繫">WhatsApp & Line contact available</span>
+          </div>
+          <div class="booking-feature">
+            <div class="booking-feature-icon">🛡️</div>
+            <span data-en="Satisfaction guaranteed" data-zh="品質保證，不滿意免費重做">Satisfaction guaranteed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form-wrapper animate-on-scroll" style="transition-delay:0.15s">
+        <!-- Locked state (not logged in) -->
+        <div id="bookingLocked" class="booking-locked">
+          <div class="lock-icon">🔒</div>
+          <h3 data-en="Members Only" data-zh="會員專區">Members Only</h3>
+          <p style="color:var(--text-secondary);margin:12px 0 24px;" data-en="Please login or register to book a cleaning service." data-zh="請登入或註冊以預約清潔服務。">
+            Please login or register to book a cleaning service.
+          </p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="openModal('loginModal')" data-en="🔑 Login" data-zh="🔑 登入">🔑 Login</button>
+            <button class="btn btn-outline" onclick="openModal('registerModal')" data-en="📝 Register Free" data-zh="📝 免費註冊">📝 Register Free</button>
+          </div>
+        </div>
+
+        <!-- Booking form (logged in) -->
+        <div id="bookingForm" style="display:none;">
+          <div class="form-title" data-en="📅 Book a Cleaning" data-zh="📅 預約清潔服務">📅 Book a Cleaning</div>
+          <form id="mainBookingForm" onsubmit="submitBooking(event)">
+            <div class="form-group">
+              <label class="form-label" data-en="Service Type" data-zh="服務類型">Service Type</label>
+              <select class="form-input form-select" id="bookServiceType" required>
+                <option value="" data-en="— Select a service —" data-zh="— 請選擇服務 —">— Select a service —</option>
+                <option value="hotel-2p" data-en="Hotel Room — Twin/Double (250 TWD)" data-zh="飯店客房 — 雙人房（250元）">Hotel Room — Twin/Double (250 TWD)</option>
+                <option value="hotel-biz" data-en="Hotel Room — Business (300 TWD)" data-zh="飯店客房 — 商務房（300元）">Hotel Room — Business (300 TWD)</option>
+                <option value="hotel-4p" data-en="Hotel Room — Quad (350 TWD)" data-zh="飯店客房 — 四人房（350元）">Hotel Room — Quad (350 TWD)</option>
+                <option value="hotel-suite" data-en="Hotel Room — Suite (450 TWD)" data-zh="飯店客房 — 套房（450元）">Hotel Room — Suite (450 TWD)</option>
+                <option value="home-basic" data-en="Home Cleaning — Basic (from 2,000 TWD)" data-zh="住宅清潔 — 基本（起2,000元）">Home Cleaning — Basic (from 2,000 TWD)</option>
+                <option value="home-deep" data-en="Home Cleaning — Deep (from 3,500 TWD)" data-zh="住宅清潔 — 深層（起3,500元）">Home Cleaning — Deep (from 3,500 TWD)</option>
+                <option value="move" data-en="Move-in/out Cleaning (from 4,500 TWD)" data-zh="搬入搬出清潔（起4,500元）">Move-in/out Cleaning (from 4,500 TWD)</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" data-en="Preferred Date" data-zh="希望日期">Preferred Date</label>
+                <input type="date" class="form-input" id="bookDate" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-en="Preferred Time" data-zh="希望時間">Preferred Time</label>
+                <select class="form-input form-select" id="bookTime" required>
+                  <option value="">-- Time --</option>
+                  <option>08:00</option><option>09:00</option><option>10:00</option>
+                  <option>11:00</option><option>13:00</option><option>14:00</option>
+                  <option>15:00</option><option>16:00</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Full Address" data-zh="完整地址">Full Address</label>
+              <input type="text" class="form-input" id="bookAddress" placeholder="花蓮市..." required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Contact Method" data-zh="聯絡方式">Contact Method</label>
+              <input type="text" class="form-input" id="bookContact" placeholder="Phone / Line ID / WhatsApp" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Payment Method" data-zh="付款方式">Payment Method</label>
+              <div class="payment-options">
+                <label class="payment-option" onclick="selectPayment(this)">
+                  <input type="radio" name="payment" value="cash" /> 💵 <span data-en="Cash" data-zh="現金">Cash</span>
+                </label>
+                <label class="payment-option" onclick="selectPayment(this)">
+                  <input type="radio" name="payment" value="transfer" /> 🏦 <span data-en="Bank Transfer" data-zh="銀行轉帳">Bank Transfer</span>
+                </label>
+                <label class="payment-option" onclick="selectPayment(this)">
+                  <input type="radio" name="payment" value="linepay" /> 📱 <span data-en="Line Pay" data-zh="Line Pay">Line Pay</span>
+                </label>
+                <label class="payment-option" onclick="selectPayment(this)">
+                  <input type="radio" name="payment" value="jkopay" /> 💳 <span data-en="街口支付 JKO" data-zh="街口支付">街口支付 JKO</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Special Notes (Optional)" data-zh="備註（選填）">Special Notes (Optional)</label>
+              <textarea class="form-input" id="bookNotes" rows="3" placeholder="Any special requests..." style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" data-en="✅ Confirm Booking" data-zh="✅ 確認預約">✅ Confirm Booking</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <div class="section-tag">📞 <span data-en="Contact Us" data-zh="聯絡我們">Contact Us</span></div>
+      <h2 class="section-title" data-en="We're Here to Help" data-zh="我們隨時為您服務">We're Here to Help</h2>
+      <p class="section-subtitle" data-en="Have questions or need a custom quote? Reach out via any of the channels below." data-zh="有任何問題或需要客製化報價？歡迎透過以下任一方式聯繫我們。">
+        Have questions or need a custom quote? Reach out via any of the channels below.
+      </p>
+    </div>
+    <div class="contact-wrapper">
+      <div class="animate-on-scroll">
+        <div class="contact-info-title" data-en="Get in Touch" data-zh="聯絡資訊">Get in Touch</div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-item-label" data-en="Address" data-zh="地址">Address</div>
+            <div class="contact-item-value" data-en="XXX, Hualien City, Taiwan" data-zh="XXX，花蓮市，台灣">XXX, Hualien City, Taiwan</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-item-label" data-en="Email" data-zh="電子郵件">Email</div>
+            <div class="contact-item-value">
+              <a href="mailto:10845046@gms.tcu.edu.tw">10845046@gms.tcu.edu.tw</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-item-label" data-en="Phone / WhatsApp / Line" data-zh="電話 / WhatsApp / Line">Phone / WhatsApp / Line</div>
+            <div class="contact-item-value">
+              <a href="tel:0933315279">0933-315-279</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-item-label" data-en="Working Hours" data-zh="服務時間">Working Hours</div>
+            <div class="contact-item-value" data-en="Mon–Sun 08:00–18:00" data-zh="週一至週日 08:00–18:00">Mon–Sun 08:00–18:00</div>
+          </div>
+        </div>
+        <!-- Map Placeholder -->
+        <div style="margin-top:24px;border-radius:var(--radius-md);overflow:hidden;background:var(--bg-soft);border:1px solid var(--border);">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57909.96538498!2d121.5760!3d23.9927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346ee5b18ab96e4d%3A0x5c23e4a3cfc7c0bb!2sHualien%20City!5e0!3m2!1sen!2stw!4v1621000000000"
+            width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"
+            title="Hualien City Map">
+          </iframe>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper animate-on-scroll" style="transition-delay:0.15s">
+        <div class="form-title" data-en="✉️ Send a Message" data-zh="✉️ 傳送訊息">✉️ Send a Message</div>
+        <form id="contactForm" onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-en="Your Name" data-zh="您的姓名">Your Name</label>
+              <input type="text" class="form-input" id="contactName" placeholder="John / 王小明" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Phone / Line" data-zh="電話 / Line">Phone / Line</label>
+              <input type="text" class="form-input" id="contactPhone" placeholder="09xx-xxx-xxx" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Email" data-zh="電子郵件">Email</label>
+            <input type="email" class="form-input" id="contactEmail" placeholder="you@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Subject" data-zh="主旨">Subject</label>
+            <select class="form-input form-select" id="contactSubject">
+              <option data-en="General Inquiry" data-zh="一般詢問">General Inquiry</option>
+              <option data-en="Request a Quote" data-zh="索取報價">Request a Quote</option>
+              <option data-en="Partnership" data-zh="合作洽談">Partnership</option>
+              <option data-en="Complaint / Feedback" data-zh="客訴 / 意見回饋">Complaint / Feedback</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Message" data-zh="訊息內容">Message</label>
+            <textarea class="form-input" id="contactMessage" rows="5" placeholder="Type your message here..." style="resize:vertical;" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;" data-en="📨 Send Message" data-zh="📨 傳送訊息">📨 Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">🧹</div>
+          <span data-en="CleanPro Hualien" data-zh="潔淨專家 花蓮">CleanPro Hualien</span>
+        </div>
+        <p data-en="Professional hotel, motel, guesthouse and home cleaning services in Hualien, Taiwan. Trusted by 50+ businesses." data-zh="花蓮市專業飯店、汽車旅館、民宿及住宅清潔服務，獲50+業者信任合作。">
+          Professional hotel, motel, guesthouse and home cleaning services in Hualien, Taiwan. Trusted by 50+ businesses.
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-en="Services" data-zh="服務項目">Services</div>
+        <ul>
+          <li><a href="#services" data-en="Hotel Cleaning" data-zh="飯店清潔">Hotel Cleaning</a></li>
+          <li><a href="#services" data-en="Home Cleaning" data-zh="住宅清潔">Home Cleaning</a></li>
+          <li><a href="#services" data-en="Deep Cleaning" data-zh="深層清潔">Deep Cleaning</a></li>
+          <li><a href="#services" data-en="Move-in/out" data-zh="搬入搬出">Move-in/out</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-en="Quick Links" data-zh="快速連結">Quick Links</div>
+        <ul>
+          <li><a href="#pricing" data-en="Pricing" data-zh="收費標準">Pricing</a></li>
+          <li><a href="#gallery" data-en="Gallery" data-zh="作品展示">Gallery</a></li>
+          <li><a href="#booking" data-en="Book Now" data-zh="立即預約">Book Now</a></li>
+          <li><a href="#contact" data-en="Contact" data-zh="聯絡我們">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-en="Contact" data-zh="聯絡資訊">Contact</div>
+        <ul>
+          <li style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:8px;">📍 XXX, Hualien City</li>
+          <li style="font-size:14px;margin-bottom:8px;"><a href="mailto:10845046@gms.tcu.edu.tw" style="color:rgba(255,255,255,0.6);">📧 10845046@gms.tcu.edu.tw</a></li>
+          <li style="font-size:14px;"><a href="tel:0933315279" style="color:rgba(255,255,255,0.6);">📱 0933-315-279</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <span data-en="© 2025 CleanPro Hualien. All rights reserved." data-zh="© 2025 潔淨專家 花蓮。版權所有。">© 2025 CleanPro Hualien. All rights reserved.</span>
+      <span data-en="Made with ❤️ in Hualien, Taiwan 🇹🇼" data-zh="用 ❤️ 製作於台灣花蓮 🇹🇼">Made with ❤️ in Hualien, Taiwan 🇹🇼</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== MODAL: LOGIN ==================== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close">✕</button>
+    <div class="modal-icon">🔑</div>
+    <div class="modal-title" id="loginTitle" data-en="Welcome Back" data-zh="歡迎回來">Welcome Back</div>
+    <div class="modal-subtitle" data-en="Login to your CleanPro account" data-zh="登入您的潔淨專家帳號">Login to your CleanPro account</div>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" data-en="Email Address" data-zh="電子郵件">Email Address</label>
+        <input type="email" class="form-input" id="loginEmail" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required minlength="6" />
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" data-en="🔑 Login" data-zh="🔑 登入">🔑 Login</button>
+    </form>
+    <div class="modal-footer-text">
+      <span data-en="Don't have an account?" data-zh="還沒有帳號？">Don't have an account?</span>
+      <a onclick="switchModal('loginModal','registerModal')" data-en=" Register here" data-zh=" 立即註冊"> Register here</a>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: REGISTER ==================== -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+    <button class="modal-close" onclick="closeModal('registerModal')" aria-label="Close">✕</button>
+    <div class="modal-icon">📝</div>
+    <div class="modal-title" id="registerTitle" data-en="Create Account" data-zh="建立帳號">Create Account</div>
+    <div class="modal-subtitle" data-en="Join CleanPro and start booking today" data-zh="加入潔淨專家，立即開始預約">Join CleanPro and start booking today</div>
+    <form id="registerForm" onsubmit="handleRegister(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" data-en="First Name" data-zh="名字">First Name</label>
+          <input type="text" class="form-input" id="regFirstName" placeholder="John" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="Last Name" data-zh="姓氏">Last Name</label>
+          <input type="text" class="form-input" id="regLastName" placeholder="Wang" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-en="Email Address" data-zh="電子郵件">Email Address</label>
+        <input type="email" class="form-input" id="regEmail" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-en="Phone Number" data-zh="電話號碼">Phone Number</label>
+        <input type="tel" class="form-input" id="regPhone" placeholder="09xx-xxx-xxx" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+        <input type="password" class="form-input" id="regPassword" placeholder="Min. 6 characters" required minlength="6" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-en="Confirm Password" data-zh="確認密碼">Confirm Password</label>
+        <input type="password" class="form-input" id="regPasswordConfirm" placeholder="••••••••" required minlength="6" />
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" data-en="📝 Create Account" data-zh="📝 建立帳號">📝 Create Account</button>
+    </form>
+    <div class="modal-footer-text">
+      <span data-en="Already have an account?" data-zh="已有帳號？">Already have an account?</span>
+      <a onclick="switchModal('registerModal','loginModal')" data-en=" Login here" data-zh=" 立即登入"> Login here</a>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
