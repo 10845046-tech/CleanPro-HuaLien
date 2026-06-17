@@ -125,277 +125,162 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
    MODAL SYSTEM
    ------------------------------------------ */
 function openModal(id) {
-  const overlay = document.getElementById(id);
-  if (!overlay) return;
-  overlay.classList.add('active');
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  // Focus first input
-  setTimeout(() => {
-    const firstInput = overlay.querySelector('input');
-    if (firstInput) firstInput.focus();
-  }, 300);
 }
 
 function closeModal(id) {
-  const overlay = document.getElementById(id);
-  if (!overlay) return;
-  overlay.classList.remove('active');
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove('open');
   document.body.style.overflow = '';
 }
 
-function switchModal(fromId, toId) {
-  closeModal(fromId);
-  setTimeout(() => openModal(toId), 200);
-}
-
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal(overlay.id);
-  });
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
-  }
-});
-
-/* ------------------------------------------
-   TOAST NOTIFICATIONS
-   ------------------------------------------ */
-function showToast(msg, type = 'success', duration = 3500) {
-  const toast = document.getElementById('toast');
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-  toast.innerHTML = `<span>${icons[type]}</span> ${msg}`;
-  toast.className = `toast ${type} show`;
-  setTimeout(() => { toast.classList.remove('show'); }, duration);
+function handleModalBg(e, id) {
+  if (e.target.id === id) closeModal(id);
 }
 
 /* ------------------------------------------
-   AUTH SYSTEM (localStorage demo)
+   AUTH SYSTEM
    ------------------------------------------ */
-function handleRegister(e) {
-  e.preventDefault();
-  const firstName = document.getElementById('regFirstName').value.trim();
-  const lastName  = document.getElementById('regLastName').value.trim();
-  const email     = document.getElementById('regEmail').value.trim().toLowerCase();
-  const phone     = document.getElementById('regPhone').value.trim();
-  const pass      = document.getElementById('regPassword').value;
-  const passConf  = document.getElementById('regPasswordConfirm').value;
+function updateAuthUI() {
+  const authButtons = document.getElementById('authButtons');
+  const userMenu = document.getElementById('userMenu');
+  const userAvatar = document.getElementById('userAvatar');
+  const dropdownName = document.getElementById('dropdownName');
+  const dropdownEmail = document.getElementById('dropdownEmail');
 
-  if (pass !== passConf) {
-    showToast(STATE.lang === 'zh' ? '密碼不一致，請重新確認。' : 'Passwords do not match.', 'error');
-    return;
+  if (STATE.user) {
+    authButtons.style.display = 'none';
+    userMenu.style.display = 'block';
+    userAvatar.textContent = STATE.user.name.charAt(0).toUpperCase();
+    dropdownName.textContent = STATE.user.name;
+    dropdownEmail.textContent = STATE.user.email;
+  } else {
+    authButtons.style.display = 'flex';
+    userMenu.style.display = 'none';
   }
-
-  const existing = STATE.users.find(u => u.email === email);
-  if (existing) {
-    showToast(STATE.lang === 'zh' ? '此電子郵件已被註冊，請直接登入。' : 'This email is already registered. Please login.', 'error');
-    return;
-  }
-
-  const newUser = { firstName, lastName, email, phone, pass };
-  STATE.users.push(newUser);
-  localStorage.setItem('cpUsers', JSON.stringify(STATE.users));
-
-  // Auto login
-  loginUser(newUser);
-  closeModal('registerModal');
-  document.getElementById('registerForm').reset();
-  showToast(STATE.lang === 'zh' ? `歡迎加入，${firstName}！` : `Welcome, ${firstName}! Account created successfully.`);
 }
+
+function toggleDropdown() {
+  document.getElementById('userDropdown').classList.toggle('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.user-menu')) {
+    const dd = document.getElementById('userDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+});
 
 function handleLogin(e) {
   e.preventDefault();
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const pass  = document.getElementById('loginPassword').value;
-
-  const user = STATE.users.find(u => u.email === email && u.pass === pass);
-  if (!user) {
-    showToast(STATE.lang === 'zh' ? '電子郵件或密碼錯誤，請再試一次。' : 'Incorrect email or password. Please try again.', 'error');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const found = STATE.users.find(u => u.email === email && u.password === password);
+  if (!found) {
+    showToast(STATE.lang === 'zh' ? '帳號或密碼錯誤' : 'Invalid email or password', 'error');
     return;
   }
-
-  loginUser(user);
+  STATE.user = found;
+  localStorage.setItem('cpUser', JSON.stringify(found));
+  updateAuthUI();
   closeModal('loginModal');
-  document.getElementById('loginForm').reset();
-  showToast(STATE.lang === 'zh' ? `歡迎回來，${user.firstName}！` : `Welcome back, ${user.firstName}!`);
+  showToast(STATE.lang === 'zh' ? `歡迎回來，${found.name}！` : `Welcome back, ${found.name}!`, 'success');
 }
 
-function loginUser(user) {
-  STATE.user = user;
-  localStorage.setItem('cpUser', JSON.stringify(user));
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  if (STATE.users.find(u => u.email === email)) {
+    showToast(STATE.lang === 'zh' ? '此電子郵件已被使用' : 'Email already registered', 'error');
+    return;
+  }
+  const newUser = { name, email, password };
+  STATE.users.push(newUser);
+  localStorage.setItem('cpUsers', JSON.stringify(STATE.users));
+  STATE.user = newUser;
+  localStorage.setItem('cpUser', JSON.stringify(newUser));
   updateAuthUI();
+  closeModal('registerModal');
+  showToast(STATE.lang === 'zh' ? `歡迎，${name}！` : `Welcome, ${name}!`, 'success');
 }
 
 function logout() {
   STATE.user = null;
   localStorage.removeItem('cpUser');
   updateAuthUI();
-  toggleDropdown(true); // force close
-  showToast(STATE.lang === 'zh' ? '已成功登出。' : 'You have been logged out.', 'info');
-}
-
-function updateAuthUI() {
-  const isLoggedIn = !!STATE.user;
-  document.getElementById('authButtons').style.display = isLoggedIn ? 'none' : 'flex';
-  document.getElementById('userMenu').style.display   = isLoggedIn ? 'block' : 'none';
-
-  // Booking section
-  document.getElementById('bookingLocked').style.display = isLoggedIn ? 'none' : 'block';
-  document.getElementById('bookingForm').style.display   = isLoggedIn ? 'block' : 'none';
-
-  if (isLoggedIn) {
-    const initials = (STATE.user.firstName[0] + (STATE.user.lastName?.[0] || '')).toUpperCase();
-    document.getElementById('userAvatar').textContent   = initials;
-    document.getElementById('dropdownName').textContent = `${STATE.user.firstName} ${STATE.user.lastName || ''}`.trim();
-    document.getElementById('dropdownEmail').textContent = STATE.user.email;
-  }
-}
-
-/* ------------------------------------------
-   USER DROPDOWN
-   ------------------------------------------ */
-function toggleDropdown(forceClose = false) {
-  const dropdown = document.getElementById('userDropdown');
-  if (forceClose) {
-    dropdown.classList.remove('open');
-  } else {
-    dropdown.classList.toggle('open');
-  }
-}
-
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  const menu = document.getElementById('userMenu');
-  if (menu && !menu.contains(e.target)) {
-    document.getElementById('userDropdown')?.classList.remove('open');
-  }
-});
-
-/* ------------------------------------------
-   PAYMENT OPTION SELECTION
-   ------------------------------------------ */
-function selectPayment(label) {
-  document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
-  label.classList.add('selected');
-  const input = label.querySelector('input');
-  if (input) input.checked = true;
+  showToast(STATE.lang === 'zh' ? '已成功登出' : 'Logged out successfully');
 }
 
 /* ------------------------------------------
    BOOKING FORM
    ------------------------------------------ */
-// Set minimum date to today
-const bookDateInput = document.getElementById('bookDate');
-if (bookDateInput) {
-  const today = new Date().toISOString().split('T')[0];
-  bookDateInput.min = today;
-  bookDateInput.value = today;
-}
-
-function submitBooking(e) {
+function handleBooking(e) {
   e.preventDefault();
+  const service = document.getElementById('bookService').value;
+  const date = document.getElementById('bookDate').value;
+  const address = document.getElementById('bookAddress').value.trim();
+  const contact = document.getElementById('bookContact').value.trim();
 
-  if (!STATE.user) {
-    openModal('loginModal');
+  if (!date || !address || !contact) {
+    showToast(STATE.lang === 'zh' ? '請填寫所有必填欄位' : 'Please fill in all required fields', 'error');
     return;
   }
 
-  const serviceType = document.getElementById('bookServiceType').value;
-  const date        = document.getElementById('bookDate').value;
-  const time        = document.getElementById('bookTime').value;
-  const address     = document.getElementById('bookAddress').value.trim();
-  const contact     = document.getElementById('bookContact').value.trim();
-  const notes       = document.getElementById('bookNotes').value.trim();
-  const payment     = document.querySelector('input[name="payment"]:checked');
-
-  if (!serviceType || !date || !time || !address || !contact) {
-    showToast(STATE.lang === 'zh' ? '請填寫所有必填欄位。' : 'Please fill in all required fields.', 'error');
-    return;
-  }
-
-  if (!payment) {
-    showToast(STATE.lang === 'zh' ? '請選擇付款方式。' : 'Please select a payment method.', 'error');
-    return;
-  }
-
-  // Save booking to localStorage
-  const booking = {
-    id: Date.now(),
-    user: STATE.user.email,
-    serviceType, date, time, address, contact,
-    payment: payment.value,
-    notes,
-    status: 'pending',
-    createdAt: new Date().toISOString(),
+  const serviceNames = {
+    hotel: { en: 'Hotel Room Cleaning', zh: '飯店客房清潔' },
+    home: { en: 'Home Cleaning', zh: '住宅清潔' },
+    deep: { en: 'Deep Cleaning', zh: '深度清潔' }
   };
-  const bookings = JSON.parse(localStorage.getItem('cpBookings') || '[]');
-  bookings.push(booking);
-  localStorage.setItem('cpBookings', JSON.stringify(bookings));
 
-  // Reset form
-  document.getElementById('mainBookingForm').reset();
-  document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
-  bookDateInput.value = new Date().toISOString().split('T')[0];
-
-  const successMsg = STATE.lang === 'zh'
-    ? '✅ 預約成功！我們將盡快與您聯繫確認。'
-    : '✅ Booking received! We\'ll contact you shortly to confirm.';
-  showToast(successMsg, 'success', 5000);
+  const serviceName = serviceNames[service][STATE.lang];
+  showToast(
+    STATE.lang === 'zh'
+      ? `✅ 預約成功！${serviceName}已排定於 ${date}`
+      : `✅ Booking confirmed! ${serviceName} on ${date}`,
+    'success'
+  );
+  e.target.reset();
 }
 
 /* ------------------------------------------
    CONTACT FORM
    ------------------------------------------ */
-function submitContact(e) {
+function handleContact(e) {
   e.preventDefault();
-
-  const name    = document.getElementById('contactName').value.trim();
-  const phone   = document.getElementById('contactPhone').value.trim();
-  const email   = document.getElementById('contactEmail').value.trim();
-  const subject = document.getElementById('contactSubject').value;
-  const message = document.getElementById('contactMessage').value.trim();
-
-  // Save to localStorage (demo)
-  const messages = JSON.parse(localStorage.getItem('cpMessages') || '[]');
-  messages.push({ name, phone, email, subject, message, sentAt: new Date().toISOString() });
-  localStorage.setItem('cpMessages', JSON.stringify(messages));
-
-  document.getElementById('contactForm').reset();
-
-  const successMsg = STATE.lang === 'zh'
-    ? '✅ 訊息已送出！我們將於24小時內回覆您。'
-    : '✅ Message sent! We\'ll reply within 24 hours.';
-  showToast(successMsg, 'success', 5000);
+  showToast(STATE.lang === 'zh' ? '✅ 訊息已發送！我們將盡快回覆您。' : '✅ Message sent! We\'ll get back to you soon.', 'success');
+  e.target.reset();
 }
 
 /* ------------------------------------------
-   SMOOTH SCROLL for anchor links
+   TOAST NOTIFICATIONS
    ------------------------------------------ */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', (e) => {
-    const id = a.getAttribute('href').replace('#', '');
-    const target = document.getElementById(id);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
+let toastTimer;
+function showToast(msg, type = '') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
 
 /* ------------------------------------------
    INIT
    ------------------------------------------ */
-function init() {
-  // Apply saved language
+document.addEventListener('DOMContentLoaded', () => {
   setLang(STATE.lang);
-  // Restore auth state
   updateAuthUI();
-  // Trigger scroll once to set navbar state
-  window.dispatchEvent(new Event('scroll'));
-}
 
-init();
+  // Set min date for booking to today
+  const bookDate = document.getElementById('bookDate');
+  if (bookDate) {
+    const today = new Date().toISOString().split('T')[0];
+    bookDate.min = today;
+  }
+});
